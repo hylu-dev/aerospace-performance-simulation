@@ -23,11 +23,14 @@ We can then run the simulation for a set amount of timeâ€”for instance, a monthâ
 
 ### Involvement
 
-This is a team project consisting of me and 2 other members. My role in the project was strictly writing the simulation using extracted data provided by a team member in filtered.csv. Therefore, all code used to build the simulation is written by me and relevant for review. I've included this project to demonstrate proficiency working with computational mathematics and complex problems.
+This is a team project consisting of me and 2 other members. My role in the project was strictly writing the simulation using extracted data provided by a team member in filtered.csv. 
+
+Therefore, all code used to build the simulation is written by me and relevant for review. 
+I've included this project to demonstrate proficiency working with computational mathematics and complex problems.
 
 ### Code Highlights
 
-The project is a series of Python scripts used in the simulation as well as the calculation of results. Below I've highlighted core sections of the code along with some context.
+The project is a series of Python scripts used in the simulation as well as the calculation of results. Below I've highlighted core sections of the simulation code along with some context. Some context is also given on non-simulation files for posterity.
 #### Simulation Code
 - **sim.py**
   - Runs the simulation
