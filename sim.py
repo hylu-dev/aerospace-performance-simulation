@@ -7,7 +7,15 @@ import unittest
 from Jobs import A, B, C, D
 
 class Sim:
+    """
+        The production line is simulated through generating each machine process as a FIFO_Node.
+        Jobs are then fed through as a specified rate for the liftime of the simulation.
 
+        total_time: length of simulation in seconds
+        arrival_distr: how job arrivals should be distributed
+        rate: how often should jobs arrive per hour
+        max_jobs: the maximum number of jobs that shoud be introduced into the simulation
+    """
     def __init__(self, total_time, arrival_distr, rate = 1, max_jobs = float("inf")):
         self.rate = rate
         self.arrival_distr = arrival_distr
@@ -51,6 +59,7 @@ class Sim:
 
         self.nodes = {} # keys will be the names of each machine, that way we have any easy way to send jobs from machine to machine
 
+    # generates a list machine processes that a particular job requires to be produced
     def __create_process(self, job_type):
         PART_TYPE = 0
         process = []
@@ -62,6 +71,7 @@ class Sim:
                     process.append(line)
         return process
 
+    # process data we scraped occasionally has missing data due to error, skip these and note in report
     def __create_skips(self):
         # get transitions
         nodeTransitions = Counter() #instead of prob, get occurences of transitions
@@ -218,6 +228,7 @@ class Sim:
                 else:
                     self.jobs_completed += 1              
 
+    # In cases where multiple machines are available for a job, choose the best one (least full)
     def getBestMachine(self, next_machines):
         shortest_queue = float("inf")
         best_machines = []
@@ -229,7 +240,7 @@ class Sim:
                 best_machines.append(machine)
         return best_machines[random.randrange(0, len(best_machines))] # uniformly choose from best machines (all same queue length)
 
-
+    # Generate a FIFO_Node for each of the machine processes
     def populate_nodes(self):
         PART_TYPE = 0
         MACHINES = 4
@@ -280,12 +291,14 @@ class Sim:
         print(f"Jobs Completed: {self.jobs_completed}")
         print(f"---------END {part_type}---------\n")
 
+    #service rates for each FIFO_Node
     def get_service_rates(self):
         service_rates = {}
         for node in self.nodes.values():
             service_rates[node.name] = node.average_service()
         return service_rates
 
+    #rate of job arrivals to nodes
     def get_external_rates(self):
         #calculate external rates
         for node in self.A_external_arrivals:
@@ -299,6 +312,7 @@ class Sim:
         result = [self.A_external_arrivals, self.B_external_arrivals, self.C_external_arrivals, self.D_external_arrivals]
         return(result)
 
+    #probabilities for parts transitioning to specific FIFO_Nodes
     def get_probabilities(self):
         #calculate transition probabilities
         for transition, val in self.A_probs.items():
@@ -309,10 +323,6 @@ class Sim:
             self.C_probs[transition] /= self.C_count[transition[0]]
         for transition, val in self.D_probs.items():
             self.D_probs[transition] /= self.D_count[transition[0]]
-        # print(f"\nProb for A: {self.A_probs}\n")
-        # print(f"\nProb for B: {self.B_probs}\n")
-        # print(f"\nProb for C: {self.C_probs}\n")
-        # print(f"\nProb for D: {self.D_probs}\n")
         return([self.A_probs, self.B_probs, self.C_probs, self.D_probs])
 
         

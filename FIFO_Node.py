@@ -1,17 +1,18 @@
 import random
-from Jobs import A, B, C, D
 
+"""
+    name: The name of this production process
+"""
 class FIFO_Node:
 
-    def __init__(self, name, rate = 1):
+    def __init__(self, name):
         self.name = name
         self.jobs = []
         self.time = 0
-        self.rate = rate
         self.busy_time = 0
         self.response_times = []
         self.next_event = float("inf")
-        self.service_time = 0
+        self.service_time = 0 
         self.total_service_time = 0
         self.num_services = 0
         self.job_count = 0
@@ -40,8 +41,6 @@ class FIFO_Node:
         self.time = time
 
     def depart(self):
-        #print("departing: ", self.name, self.response_times)
-        #print(self.time - self.jobs[0].arrival_time)
         self.jobs[0].set_last(self.name)
         self.response_times.append(self.time - self.jobs[0].arrival_time)
         if len(self.jobs) > 1:
@@ -49,8 +48,6 @@ class FIFO_Node:
         else:
             self.next_event = float("inf")
         return self.jobs.pop(0)
-
-        #print(self.time, self.name, "Departure:", "Jobs at node: " + str(len(self.jobs)))
 
     def check(self):
         if self.time >= self.next_check:
