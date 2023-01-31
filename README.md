@@ -1,6 +1,7 @@
 # Collin's Aerospace Performance Simulation
 
 _This project is created with censored data procured with the permission of Collin's Aerospace associates._
+_This was an optional cumulative project for CSC498 Performance Analysis at the University of Toronto Mississauga_
 
 Collin's Aerospace produces a multitude of aerospace parts and systems for both the flight and defense industry. The production of these parts require long and complex production processes that are prone to incident and delay.
 
